@@ -1,0 +1,47 @@
+name: Update Live Cloud Status
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch and translate public cloud status feeds
+        run: node scripts/update-status.mjs
+
+      - name: Commit updated status snapshot if meaningful state changed
+        run: |
+          if git diff --quiet data/live-status.json; then
+            echo "No changes to live-status.json"
+            exit 0
+          fi
+
+          # Check if anything besides updatedAt changed (or update at most once every 6 hours on quiet days)
+          PREV_SIG=$(git show HEAD:data/live-status.json | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(JSON.stringify({overall:d.overall,providers:d.providers,active:d.activeIncidents,recent:d.recentIncidents}))")
+          CURR_SIG=$(node -e "const d=JSON.parse(require('fs').readFileSync('data/live-status.json','utf8')); console.log(JSON.stringify({overall:d.overall,providers:d.providers,active:d.activeIncidents,recent:d.recentIncidents}))")
+
+          if [ "$PREV_SIG" = "$CURR_SIG" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Status unchanged on quiet day; skipping noisy commit."
+            git checkout -- data/live-status.json
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live-status.json
+          git commit -m "chore: update live cloud status snapshot"
+          git push

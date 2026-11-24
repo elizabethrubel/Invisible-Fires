@@ -1,0 +1,78 @@
+[
+  {
+    "id": "ms365-nov-2026",
+    "date": "Nov 12–13, 2026",
+    "who": "Microsoft 365",
+    "layer": "gateway",
+    "oneLiner": "Outlook email and Teams stalled worldwide for nearly a full day.",
+    "whatYouSaw": "Work emails wouldn't send, Teams chats froze, and logins failed across businesses, hospitals (including UK NHS trusts), and government offices.",
+    "why": "A hidden software mistake—sitting quietly since a July update—woke up on Microsoft's main network gateways when heavy traffic shifted during lower capacity. Microsoft confirmed it was not a cyberattack.",
+    "analogy": "Like a highway tollbooth lane having a stuck gate all summer that nobody noticed until rush-hour traffic got rerouted through that exact lane.",
+    "technical": "A dormant Windows networking defect on Exchange Online gateway servers triggered under shifted traffic load and reduced capacity, cascading into Outlook, Teams, and Copilot for ~23h 50m.",
+    "sources": [
+      {
+        "label": "ThousandEyes · Outage Analysis (Nov 17, 2026)",
+        "url": "https://www.thousandeyes.com/blog/microsoft-365-outage-analysis-november-12-2026"
+      },
+      {
+        "label": "The Guardian · Global Coverage",
+        "url": "https://www.theguardian.com/technology/2026/nov/13/microsoft-outage-outlook-teams-word-excel-reports"
+      }
+    ]
+  },
+  {
+    "id": "gcp-london-oct-2026",
+    "date": "Oct 19–20, 2026",
+    "who": "Google Cloud (London)",
+    "layer": "power",
+    "oneLiner": "A local power disruption in London slowed UK banking and retail apps for 6 hours.",
+    "whatYouSaw": "Several UK banking apps and websites hosted in London felt sluggish or briefly failed to load overnight and into Tuesday morning.",
+    "why": "An outside electrical power interruption struck one London building. Traffic automatically shifted to neighboring London buildings, which briefly caused traffic jams while absorbing the extra crowd.",
+    "analogy": "Like one terminal at a busy airport losing power: flights move to the next terminal so travel keeps going, but security lines get crowded until the lights come back on.",
+    "technical": "An external electrical power disruption impacted Google Cloud zone europe-west2-b; failover traffic created transient latency and elevated errors across europe-west2 for 6 hours and 8 minutes.",
+    "sources": [
+      {
+        "label": "Google Cloud · Official Incident Report",
+        "url": "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"
+      }
+    ]
+  },
+  {
+    "id": "cloudflare-nov-2025",
+    "date": "Nov 18, 2025",
+    "who": "Cloudflare",
+    "layer": "gate",
+    "oneLiner": "A routine security list accidentally doubled in size and stalled major websites for ~3 hours.",
+    "whatYouSaw": "People across the world hit sudden error pages on major news sites, shops, and everyday web apps.",
+    "why": "A routine internal database change caused an automated list of bad-bot rules to duplicate itself. When that oversized list reached Cloudflare's front-door servers, it exceeded a safety size limit and crashed them.",
+    "analogy": "Like a printer glitch doubling a restaurant menu to 400 pages—so every waiter's clipboard snapped the moment they picked it up.",
+    "technical": "A ClickHouse permissions change duplicated entries in a Bot Management feature file beyond a hard-coded limit in Cloudflare's core proxy software, causing global 5xx errors.",
+    "sources": [
+      {
+        "label": "Cloudflare · Official Postmortem",
+        "url": "https://blog.cloudflare.com/18-november-2025-outage/"
+      }
+    ]
+  },
+  {
+    "id": "aws-oct-2025",
+    "date": "Oct 20, 2025",
+    "who": "Amazon Web Services",
+    "layer": "hub",
+    "oneLiner": "A glitch in Northern Virginia rippled across popular North American apps.",
+    "whatYouSaw": "Popular apps, smart-home devices, and online checkouts across North America froze or refused to connect early Monday morning.",
+    "why": "An internal health-checking and address-lookup glitch inside Amazon's oldest and busiest East Coast hub triggered a domino effect across services that relied on it.",
+    "analogy": "Like the main air-traffic radar at a hub airport mistakenly marking healthy runways closed—delaying dozens of airlines that connect through that city.",
+    "technical": "Centered in AWS US-EAST-1 (N. Virginia), a malfunction in internal Network Load Balancer health monitoring and DNS automation cascaded across EC2 and DynamoDB-dependent workloads.",
+    "sources": [
+      {
+        "label": "Amazon News · Official Disruption Update",
+        "url": "https://www.aboutamazon.com/news/aws/aws-service-disruptions-outage-update"
+      },
+      {
+        "label": "ThousandEyes · AWS Outage Analysis",
+        "url": "https://www.thousandeyes.com/blog/aws-outage-analysis-october-20-2025"
+      }
+    ]
+  }
+]

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invisible Fires — How the Internet Stays Running</title>
+  <meta name="description" content="Every second, small parts of the internet break—and almost none of them ever reach you. A quiet, plain-English interactive guide to how the cloud works and what happens during outages." />
+  <meta property="og:title" content="Invisible Fires — How the Internet Stays Running" />
+  <meta property="og:description" content="A plain-English, interactive guide to how the internet works, the invisible fires engineers put out every day, and what actually happens during major outages." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2308090b'/><circle cx='16' cy='16' r='6' fill='%23ea6a32'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+
+  <!-- Minimal Top Navigation -->
+  <header class="top-nav">
+    <div class="container top-nav-inner">
+      <a href="#home" class="brand-btn" data-open-view="home" aria-label="Invisible Fires home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">Invisible Fires</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#now" class="nav-link" data-nav="now" data-open-view="now">Right now</a>
+        <a href="#how" class="nav-link" data-nav="how" data-open-view="how">How it works</a>
+        <a href="#famous" class="nav-link" data-nav="famous" data-open-view="famous">Famous outages</a>
+      </nav>
+
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle dark and light theme" title="Switch dark / light theme">
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="hidden">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       VIEW 1: LANDING PAGE (LEFT EDITORIAL / RIGHT LIVING CANVAS)
+       =================================================================== -->
+  <main id="view-home" class="view active">
+    <div class="container page-shell">
+      <div class="split-layout split-layout-center">
+        <div>
+          <h1 class="display">Invisible Fires</h1>
+          <p class="lead mt-5">
+            Every second, small parts of the internet break. Almost none of them ever reach your screen. When one finally does, here is what is actually happening—in plain English.
+          </p>
+
+          <div class="pulse-line">
+            <span id="home-status-dot" class="status-dot" style="background: var(--calm);"></span>
+            <span id="home-status-text">Right now, the major clouds are quiet.</span>
+          </div>
+
+          <div class="doorways">
+            <button class="doorway" data-open-view="now">
+              <div>
+                <div class="doorway-title">Is something broken right now?</div>
+                <div class="doorway-sub">Current status &amp; recent big outages explained simply.</div>
+              </div>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+
+            <button class="doorway" data-open-view="how">
+              <div>
+                <div class="doorway-title">How does the internet actually work?</div>
+                <div class="doorway-sub">Six interactive visuals—from writing a button to invisible fires.</div>
+              </div>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+
+            <button class="doorway" data-open-view="famous">
+              <div>
+                <div class="doorway-title">Famous outages, explained</div>
+                <div class="doorway-sub">CrowdStrike, Facebook, Google Cloud, Cloudflare, and Fastly.</div>
+              </div>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <p class="personal-note">
+            Built after 4.5 years in Google Cloud Site Reliability Engineering—for family, friends, and anyone who has ever stared at a spinning wheel and wondered what broke.
+          </p>
+        </div>
+
+        <div>
+          <div class="visual-stage">
+            <div class="stage-top">
+              <span style="color: var(--ink-2);">Surface vs. Underneath</span>
+              <span id="hero-spark-counter" class="tabular" style="color: var(--ink-3);">3 fires quietly put out</span>
+            </div>
+
+            <div class="stage-body stage-body-flush">
+              <canvas
+                id="hero-canvas"
+                class="stage-canvas"
+                aria-label="Interactive visualization: tap below the green surface line to spark an invisible fire and watch it get quietly contained"
+              ></canvas>
+            </div>
+
+            <div class="stage-footer stage-footer-row">
+              <p class="stage-prompt">
+                <strong>Try it:</strong> Tap anywhere in the dark space below the green line to spark an invisible fire.
+              </p>
+              <button id="hero-spark-btn" class="pill-btn pill-btn-subtle pill-btn-sm">Spark a fire</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================
+       VIEW 2: RIGHT NOW (LEFT LIVE STATUS & LIST / RIGHT STICKY STAGE)
+       =================================================================== -->
+  <section id="view-now" class="view">
+    <div class="container page-shell">
+      <div class="split-layout">
+        <div>
+          <div id="now-left-hero"></div>
+
+          <button id="now-preview-toggle" class="preview-link">
+            Preview how this page looks during an active outage
+          </button>
+
+          <div class="section-heading-row">
+            <h2 class="subdisplay">What broke recently</h2>
+            <span class="meta-label">Select one to inspect</span>
+          </div>
+          <div id="recent-list"></div>
+        </div>
+
+        <div class="sticky-stage">
+          <div class="visual-stage" id="now-stage"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       VIEW 3: HOW IT WORKS (LEFT SCROLL CHAPTERS / RIGHT STICKY STAGE)
+       =================================================================== -->
+  <section id="view-how" class="view">
+    <div class="container page-shell">
+      <div class="split-layout split-how">
+        <div>
+          <article class="chapter active" data-chapter="0">
+            <div class="meta-label">01 / 06 · WRITING CODE</div>
+            <h2 class="display-chapter mt-3">First, someone writes a button.</h2>
+            <p class="body-copy mt-4">
+              Every feature on your phone starts as instructions typed by a person. Before it goes near real users, automated checklists test it for mistakes.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>What do those checklists check?</span>
+              </button>
+              <div class="disclosure-body">
+                Just like a pilot's pre-flight check, computers run thousands of simulated taps in minutes to verify the new button works—and didn't accidentally break older buttons nearby.
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" data-chapter="1">
+            <div class="meta-label">02 / 06 · RELEASING IN WAVES</div>
+            <h2 class="display-chapter mt-3">Release in slow waves, never all at once.</h2>
+            <p class="body-copy mt-4">
+              You wouldn't serve soup to 500 wedding guests without tasting one spoonful first. Engineers roll out new changes in careful waves—starting with 1% of people, then 5%, 25%, 50%, and only then 100%.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>What happens if something breaks at 5%?</span>
+              </button>
+              <div class="disclosure-body">
+                Automated monitors spot the bump in errors immediately and pull the update back. The other 95% of people never even knew a new version existed. Engineers call this a <em>progressive canary rollout</em>.
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" data-chapter="2">
+            <div class="meta-label">03 / 06 · REAL BUILDINGS</div>
+            <h2 class="display-chapter mt-3">"The cloud" is real buildings in separate cities.</h2>
+            <p class="body-copy mt-4">
+              Your photos and apps live inside real buildings full of computers spread across different cities. Being nearby makes apps feel instant—and keeps everything running if one city loses power.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>Why keep copies in multiple cities?</span>
+              </button>
+              <div class="disclosure-body">
+                Each building has its own power grid, cooling system, and fiber cables—like watertight compartments in a ship so one leak can't sink the whole vessel. Cloud engineers call these cities <em>regions</em>.
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" data-chapter="3">
+            <div class="meta-label">04 / 06 · ONE TAP</div>
+            <h2 class="display-chapter mt-3">What happens in the blink after you tap.</h2>
+            <p class="body-copy mt-4">
+              When you tap "Send," your phone asks the internet's directory for the address, connects to the closest healthy building, and gets an answer back—usually in less than a tenth of a second.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>What is that "directory" called?</span>
+              </button>
+              <div class="disclosure-body">
+                Engineers call it <em>DNS</em> (the Domain Name System). Humans remember names like "instagram.com," while computers need number addresses—the directory translates one to the other every time.
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" data-chapter="4">
+            <div class="meta-label" style="color: var(--ember);">05 / 06 · INVISIBLE FIRES</div>
+            <h2 class="display-chapter mt-3">Small fires happen every single day.</h2>
+            <p class="body-copy mt-4">
+              Parts wear out and cables get snagged constantly inside giant data centers. Automated traffic steering notices in milliseconds and moves you to a healthy building—so you never feel a flicker.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>Does someone have to fix this by hand?</span>
+              </button>
+              <div class="disclosure-body">
+                Not to keep you online. Health checks tap each building on the shoulder every few seconds and steer traffic away automatically—giving engineers calm breathing room to repair the hardware.
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" data-chapter="5">
+            <div class="meta-label">06 / 06 · BREAKING CONTAINMENT</div>
+            <h2 class="display-chapter mt-3">Why big outages still happen.</h2>
+            <p class="body-copy mt-4">
+              Backup buildings can't stop a bad update sent to every city at the same moment—or a directory that suddenly forgets the address. That's the rare moment an invisible fire reaches your screen.
+            </p>
+            <div class="disclosure">
+              <button class="disclosure-trigger" aria-expanded="false" data-disclosure>
+                <span class="plus">+</span>
+                <span>Why don't engineers aim for 100% uptime?</span>
+              </button>
+              <div class="disclosure-body">
+                In Google's <em>Site Reliability Engineering</em> handbook, 100% reliability is actually the wrong target—it freezes new improvements and costs far more than anyone on a cell signal can notice. Instead, teams learn from every fire without blame.
+                <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 10px;">
+                  <a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener noreferrer" class="footnote-link">Embracing Risk ↗</a>
+                  <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener noreferrer" class="footnote-link">Blameless Postmortems ↗</a>
+                </div>
+              </div>
+            </div>
+            <div class="stage-controls mt-8">
+              <button class="pill-btn pill-btn-primary" data-open-view="famous">See famous outages →</button>
+              <button class="pill-btn" data-open-view="now">Check live status</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="sticky-stage">
+          <div class="visual-stage" id="how-stage"></div>
+          <div class="stage-progress-bar">
+            <div class="stage-dots" id="how-dots"></div>
+            <div style="display: flex; gap: 8px;">
+              <button id="how-prev-btn" class="pill-btn pill-btn-subtle pill-btn-sm">← Prev</button>
+              <button id="how-next-btn" class="pill-btn pill-btn-subtle pill-btn-sm">Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       VIEW 4: FAMOUS OUTAGES (LEFT STORY / RIGHT STICKY INTERACTIVE STAGE)
+       =================================================================== -->
+  <section id="view-famous" class="view">
+    <div class="container page-shell">
+      <div class="story-tabs" id="famous-tabs" role="tablist" aria-label="Famous outages"></div>
+      <div class="split-layout">
+        <div id="famous-left"></div>
+        <div class="sticky-stage">
+          <div class="visual-stage" id="famous-stage"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <span><strong style="color: var(--ink-2);">Invisible Fires</strong> · Plain-English guide to cloud reliability &amp; outages</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="#now" class="footnote-link" data-open-view="now">Right now</a>
+        <a href="#how" class="footnote-link" data-open-view="how">How it works</a>
+        <a href="#famous" class="footnote-link" data-open-view="famous">Famous outages</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
