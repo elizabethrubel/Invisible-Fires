@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-24T16:55:34.335Z",
-  "overall": "disrupted",
+  "updatedAt": "2026-11-25T10:18:44.373Z",
+  "overall": "quiet",
   "providers": [
     {
       "id": "gcp",
@@ -23,7 +23,7 @@
     {
       "id": "cloudflare",
       "name": "Cloudflare",
-      "status": "disrupted",
+      "status": "operational",
       "statusUrl": "https://www.cloudflarestatus.com/"
     },
     {
@@ -33,19 +33,7 @@
       "statusUrl": "https://www.githubstatus.com/"
     }
   ],
-  "activeIncidents": [
-    {
-      "id": "cloudflare-no721jcnlrbh",
-      "provider": "Cloudflare",
-      "startedAt": "2026-11-24T11:29:22.902Z",
-      "officialUrl": "https://www.cloudflarestatus.com/incidents/no721jcnlrbh",
-      "layer": "gateway",
-      "stage": 2,
-      "headline": "Cloudflare is working through a live disruption.",
-      "plainSummary": "A traffic gateway on Cloudflare's network is slowing down or dropping connections. Engineers are steering traffic around the bottleneck.",
-      "officialTitle": "Magic Transit Degraded Performance"
-    }
-  ],
+  "activeIncidents": [],
   "recentIncidents": [
     {
       "id": "ms365-nov-2026",
